@@ -25,22 +25,22 @@ class TestK40_CLASS(unittest.TestCase):
         self.assertEqual(estop,  '\xa6\x00IFFFFFFFFFFFFFFFFFFFFFFFFFFFFF\xa6\x82')
 
     def test_OneWireCRC(self):
-        line = map(ord,'AK0FFFFFFFFFFFFFFFFFFFFFFFFFFF')
+        line = map(ord, 'AK0FFFFFFFFFFFFFFFFFFFFFFFFFFF')
 
         # Do we get the expected CRC?
         self.assertEqual( self.object.OneWireCRC(line), 0xa4 )
 
         # Now, are the magic arrays simply normal packets with a valid CRC?
         self.assertEqual(
-            self.object.OneWireCRC(self.object.unlock[2:-2]),
+            self.object.OneWireCRC(self.object.unlock[1:-2]),
             self.object.unlock[-1] 
         )
         self.assertEqual(
-            self.object.OneWireCRC(self.object.home[2:-2]),
+            self.object.OneWireCRC(self.object.home[1:-2]),
             self.object.home[-1] 
         )
         self.assertEqual(
-            self.object.OneWireCRC(self.object.estop[2:-2]),
+            self.object.OneWireCRC(self.object.estop[1:-2]),
             self.object.estop[-1] 
         )
 
