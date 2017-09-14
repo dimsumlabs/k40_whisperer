@@ -207,3 +207,62 @@ class TestegvClass(unittest.TestCase):
                 FlipXoffset=test['flip']
             )
             self.assertEqual( got, test['expect'] )
+
+    def test_make_egv_data(self):
+        # yet another unreachable section of code
+        with self.assertRaises(TypeError):
+            self.object.make_egv_data([[0,0,0],[0,0,0]], Feed=None)
+
+        tests = [
+            {
+                'param': {
+                    'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
+                },
+                'expect': 'ICV1551931000000000CNRBS1EFNSE',
+            },
+            {
+                'param': {
+                    'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
+                    'startX': 0.01, 'startY': 0.02,
+                },
+                'expect': 'ICV1551931000000000CRtTjNRBS1ETcLcTNLqBmSEFNSE',
+            },
+            {
+                'param': {
+                    'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
+                    'units': 'mm',
+                    'startX': 0.2, 'startY': 0.4,
+                },
+                'expect': 'ICV1551931000000000CRpThNRBS1ETcLcTNLmBkSEFNSE',
+            },
+            {
+                'param': {
+                    'ecoords_in': [[0,0,0],[0.1,0,1],[0.1,0.1,0],[0,0.1,1]],
+                    'Feed': 1,
+                },
+                'expect': 'ICV1551931000000000CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
+            },
+            {
+                'param': {
+                    'ecoords_in': [[0,0,1],[0.1,0,1],[0.1,0.1,0],[0,0.1,0]],
+                    'Feed': 1,
+                },
+                'expect': 'ICV1551931000000000CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
+            },
+            {
+                'param': {
+                    'ecoords_in': [[0,0,1],[0.004,0,1],[0.004,0.004,0],[0,0.004,0]],
+                    'Feed': 1,
+                },
+                'expect': 'ICV1551931000000000CNRBS1EDBdULdDTdURdFNSE',
+            },
+        ]
+
+        # TODO
+        # - raster
+
+        for test in tests:
+            self.data = []
+            self.object.make_egv_data(**test['param'])
+            got = "".join(map(chr, self.data))
+            self.assertEqual( got, test['expect'] )
