@@ -109,7 +109,66 @@ class TestegvClass(unittest.TestCase):
             got = "".join(map(chr, self.data))
             self.assertEqual( got, test['expect'] )
 
-#    def test_make_cut_line(self):
+    def test_make_cut_line(self):
+        with self.assertRaises(StandardError):
+            self.object.make_cut_line(1.1,1.1)
+
+        tests = [
+            { 'x':  0, 'y':  0, 'expect': 'D' },
+            { 'x':  0, 'y':  1, 'expect': 'La' },
+            { 'x':  0, 'y': -1, 'expect': 'Ra' },
+            { 'x':  1, 'y':  0, 'expect': 'Ba' },
+            { 'x': -1, 'y':  0, 'expect': 'Ta' },
+            { 'x': 10, 'y': 10, 'expect': 'BLMj' },
+            { 'x':  1, 'y':  1, 'expect': 'Ma' },
+            { 'x': -1, 'y': -1, 'expect': 'TRMa' },
+            { 'x': 16, 'y':  9, 'expect': 'BLMaBaMaBaMaBaMbBaMaBaMaBaMaBaMa' },
+            { 'x': -9, 'y': 16, 'expect':  'TMaLaMaLaMaLaMbLaMaLaMaLaMaLaMa' },
+            { 'x': 100, 'y': 7, 'expect': 'BgMaBmMaBmMaBnMaBmMaBmMaBmMaBg' },
+        ]
+
+        for test in tests:
+            self.data = []
+            self.object.make_cut_line( test['x'], test['y'] )
+            self.object.flush()
+            got = "".join(map(chr, self.data))
+            self.assertEqual( got, test['expect'] )
+
+    def test_make_speed(self):
+        with self.assertRaises(TypeError):
+            self.object.make_speed()
+        with self.assertRaises(StandardError):
+            self.object.make_speed(board_name='larry')
+        with self.assertRaises(ZeroDivisionError):
+            self.object.make_speed(Feed=0)
+        with self.assertRaises(UnboundLocalError):
+            self.object.make_speed(Feed=0.7, board_name='LASER-B1')
+
+        tests = [
+            { 'f':   1, 'b': 'LASER-M2', 's': 0, 'e': 'CV1551931000000000C' },
+            { 'f':   6, 'b': 'LASER-M2', 's': 0, 'e': 'CV2390681000000000C' },
+            { 'f':   7, 'b': 'LASER-M2', 's': 0, 'e': 'CV0640541000000000' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 0, 'e': 'CV2232481000000000' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 1, 'e':  'V2232481G001' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 9, 'e':  'V2232481G009' },
+            { 'f': 0.8, 'b': 'LASER-B1', 's': 0, 'e': 'CV0042281000000000' },
+            { 'f':   1, 'b': 'LASER-B1', 's': 0, 'e': 'CV0541281000000000' },
+            { 'f':  10, 'b': 'LASER-B1', 's': 0, 'e': 'CV2330241000000000' },
+            { 'f': 100, 'b': 'LASER-B1', 's': 0, 'e': 'CV2502431000000000' },
+            { 'f': 100, 'b': 'LASER-B1', 's': 1, 'e':  'V2502431G001' },
+            { 'f': 100, 'b': 'LASER-B1', 's': 9, 'e':  'V2502431G009' },
+        ]
+
+        for test in tests:
+            got = "".join(map(chr,
+                self.object.make_speed(
+                    Feed=test['f'],
+                    board_name=test['b'],
+                    Raster_step=test['s']
+                )
+            ))
+            self.assertEqual( got, test['e'] )
+
 
     def test_make_move_data(self):
 
@@ -126,4 +185,25 @@ class TestegvClass(unittest.TestCase):
             self.data = []
             self.object.make_move_data( test['x'], test['y'] )
             got = "".join(map(chr, self.data))
+            self.assertEqual( got, test['expect'] )
+
+    def test_ecoord_adj(self):
+
+        tests = [
+            { 'adj': [0,0,0],  'scale': 0, 'flip': 0, 'expect': (0,0,0) },
+            { 'adj': [0,0,10], 'scale': 1, 'flip': 0, 'expect': (0,0,10) },
+            { 'adj': [0,0,10], 'scale': 2, 'flip': 0, 'expect': (0,0,10) },
+            { 'adj': [0,10,0], 'scale': 1, 'flip': 0, 'expect': (0,10,0) },
+            { 'adj': [0,10,0], 'scale': 2, 'flip': 0, 'expect': (0,20,0) },
+            { 'adj': [10,0,0], 'scale': 1, 'flip': 0, 'expect': (10,0,0) },
+            { 'adj': [10,0,0], 'scale': 2, 'flip': 0, 'expect': (20,0,0) },
+            { 'adj': [10,0,0], 'scale': 2, 'flip': 4, 'expect': (-12,0,0) },
+        ]
+
+        for test in tests:
+            got = self.object.ecoord_adj(
+                ecoords_adj_in=test['adj'],
+                scale=test['scale'],
+                FlipXoffset=test['flip']
+            )
             self.assertEqual( got, test['expect'] )
