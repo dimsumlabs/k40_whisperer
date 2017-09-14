@@ -9,6 +9,7 @@ import nano_library
 class Fake_dev:
     def __init__(self):
         self.expect = None
+        self.write_data = ''
 
     def _handle(self, name):
         if self.expect != name:
@@ -21,7 +22,7 @@ class Fake_dev:
     def write(self, addr, data, timeout):
         self._handle('write')
         self.write_addr = addr
-        self.write_data = data
+        self.write_data += "".join(map(chr, data))
         self.write_timeout = timeout
 
     def read(self, addr, buflen, timeout):
@@ -54,12 +55,15 @@ class TestK40_CLASS(unittest.TestCase):
     def test_say_hello(self):
         self.object.dev.expect = 'write'
         self.assertEqual(self.object.say_hello(), ['slartibartfast'])
-        self.assertEqual(self.object.dev.write_data, self.object.hello)
+        self.assertEqual(
+            self.object.dev.write_data,
+            "".join(map(chr, self.object.hello))
+        )
 
     def test_send_array(self):
         test_data = 'aabbccdd'
         self.object.dev.expect = 'write'
-        self.object.send_array(test_data)
+        self.object.send_array( map(ord, test_data) )
         # TODO - why does send_array not return the read_data results?
         self.assertEqual(self.object.dev.write_data, test_data)
 
@@ -94,20 +98,27 @@ class TestK40_CLASS(unittest.TestCase):
         )
 
     def test_send_data(self):
-        data = map(ord, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        data = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
         self.object.dev.expect = 'write'
-        self.object.send_data(data, update_gui=None, stop_calc=None)
+        self.object.send_data( map(ord, data), update_gui=None, stop_calc=None)
 
-        # FIXME - confirm the data actually being sent
+        packet_marker = '\xa6'
+
+        self.assertEqual(
+            packet_marker+'\x00'+data[0:30]+packet_marker+'\xdc',
+            self.object.dev.write_data
+        )
+
+        # FIXME - where is the second packet?
 
     def test_rapid_move(self):
         self.object.dev.expect = 'write'
         self.object.rapid_move(1000, 1000)
 
         # Deeper probing of this data block is done in test_egv
-        data = map(ord, '\xa6\x00ILzzz235Bzzz235S1PFFFFFFFFFFFF\xa6\x8a')
-        self.assertEqual(self.object.dev.write_data, data)
+        expect = '\xa6\x00ILzzz235Bzzz235S1PFFFFFFFFFFFF\xa6\x8a'
+        self.assertEqual(self.object.dev.write_data, expect)
 
     def test_hex2dec(self):
         input = ["40","e7"]
