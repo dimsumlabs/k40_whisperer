@@ -14,7 +14,6 @@ class Fake_dev:
     def _handle(self, name):
         if self.expect != name:
             raise ValueError
-        self.expect = None
 
     def reset(self):
         self._handle('reset')
@@ -104,9 +103,19 @@ class TestK40_CLASS(unittest.TestCase):
         self.object.send_data( map(ord, data), update_gui=None, stop_calc=None)
 
         packet_marker = '\xa6'
+        packet_data1 = data[0:30]
+        packet_data2 = data[30:52]
+
+        packet_data2 += 'FFFFFFFF'  # fill data to a full packet size
+
+        expect = packet_marker + '\x00' + packet_data1 + packet_marker
+        expect += chr(self.object.OneWireCRC(map(ord, packet_data1)))
+
+        expect += packet_marker + '\x00' + packet_data2 + packet_marker
+        expect += chr(self.object.OneWireCRC(map(ord, packet_data2)))
 
         self.assertEqual(
-            packet_marker+'\x00'+data[0:30]+packet_marker+'\xdc',
+            expect,
             self.object.dev.write_data
         )
 
