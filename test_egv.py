@@ -209,9 +209,6 @@ class TestegvClass(unittest.TestCase):
             self.assertEqual( got, test['expect'] )
 
     def test_make_egv_data(self):
-        # yet another unreachable section of code
-        with self.assertRaises(TypeError):
-            self.object.make_egv_data([[0,0,0],[0,0,0]], Feed=None)
 
         tests = [
             {
@@ -256,6 +253,38 @@ class TestegvClass(unittest.TestCase):
                 },
                 'expect': 'ICV1551931000000000CNRBS1EDBdULdDTdURdFNSE',
             },
+
+            # test the variable feed speed
+            {
+                'param': {
+                    'ecoords_in': [[0,0,0,0.5],[0,0,0]], 'Feed': None,
+                },
+                'expect': 'ICV-2462341000000000CNRBS1EFNSE',
+            },
+            {
+                'param': {
+                    'ecoords_in': [[0,0,0,0.2],[0,0,0]], 'Feed': None,
+                },
+                'expect': 'ICV-7472211000000000CNRBS1EFNSE',
+            },
+            {
+                # Test varing the feed speed during a cut
+                'param': {
+                    'ecoords_in': [
+                        [0,0,1,0.2],
+                        [0.004,0,1,0.2],
+                        [0.004,0.004,0,0.2],
+                        [0,0.004,0,0.5]
+                    ],
+                    'Feed': None,
+                },
+                'expect': 'ICV-7472211000000000CNRBS1EDBdULdU@NSECV-2462341000000000CNRBS1EDDTdURdFNSE',
+            },
+
+            # TODO
+            # - big enough movement to get rapid_move_fast
+            # - laser on
+            # - laser on and variable_fee/
         ]
 
         # TODO
@@ -266,3 +295,10 @@ class TestegvClass(unittest.TestCase):
             self.object.make_egv_data(**test['param'])
             got = "".join(map(chr, self.data))
             self.assertEqual( got, test['expect'] )
+
+# TODO
+# - test_rapid_move_fast
+#       (currently covers everything but a strange padding test)
+# - test_change_speed
+#       (currently covers everything except case where laser_on==false)
+
