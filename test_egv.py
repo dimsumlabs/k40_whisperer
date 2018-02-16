@@ -141,8 +141,6 @@ class TestegvClass(unittest.TestCase):
             self.object.make_speed(board_name='larry')
         with self.assertRaises(ZeroDivisionError):
             self.object.make_speed(Feed=0)
-        with self.assertRaises(UnboundLocalError):
-            self.object.make_speed(Feed=0.7, board_name='LASER-B1')
 
         tests = [
             { 'f':   1, 'b': 'LASER-M2', 's': 0, 'e': 'CV1551931000000000C' },
@@ -151,7 +149,7 @@ class TestegvClass(unittest.TestCase):
             { 'f': 100, 'b': 'LASER-M2', 's': 0, 'e': 'CV2232481000000000' },
             { 'f': 100, 'b': 'LASER-M2', 's': 1, 'e':  'V2232481G001' },
             { 'f': 100, 'b': 'LASER-M2', 's': 9, 'e':  'V2232481G009' },
-            { 'f': 0.8, 'b': 'LASER-B1', 's': 0, 'e': 'CV0042281000000000' },
+            { 'f': 0.8, 'b': 'LASER-B1', 's': 0, 'e': 'CV0042271000000000' },
             { 'f':   1, 'b': 'LASER-B1', 's': 0, 'e': 'CV0541281000000000' },
             { 'f':  10, 'b': 'LASER-B1', 's': 0, 'e': 'CV2330241000000000' },
             { 'f': 100, 'b': 'LASER-B1', 's': 0, 'e': 'CV2502431000000000' },
