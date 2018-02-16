@@ -30,7 +30,7 @@ class Fake_dev:
         self.read_addr = addr
         self.read_buflen = buflen
         self.read_timeout = timeout
-        return "slartibartfast"
+        return [255,206,-1,-1,-1,-1] # 206 == self.OK
 
 class TestK40_CLASS(unittest.TestCase):
     def setUp(self):
@@ -53,18 +53,11 @@ class TestK40_CLASS(unittest.TestCase):
 
     def test_say_hello(self):
         self.object.dev.expect = 'write'
-        self.assertEqual(self.object.say_hello(), ['slartibartfast'])
+        self.assertEqual(self.object.say_hello(), self.object.OK)
         self.assertEqual(
             self.object.dev.write_data,
             "".join(map(chr, self.object.hello))
         )
-
-    def test_send_array(self):
-        test_data = 'aabbccdd'
-        self.object.dev.expect = 'write'
-        self.object.send_array( map(ord, test_data) )
-        # TODO - why does send_array not return the read_data results?
-        self.assertEqual(self.object.dev.write_data, test_data)
 
     # Several of these function calls have nested calls to dev functions,
     # which my dumb dev mock cannot handle:
@@ -103,6 +96,7 @@ class TestK40_CLASS(unittest.TestCase):
         self.object.send_data( map(ord, data), update_gui=None, stop_calc=None)
 
         packet_marker = '\xa6'
+        packet_end = '\xa0'
         packet_data1 = data[0:30]
         packet_data2 = data[30:52]
 
@@ -110,9 +104,11 @@ class TestK40_CLASS(unittest.TestCase):
 
         expect = packet_marker + '\x00' + packet_data1 + packet_marker
         expect += chr(self.object.OneWireCRC(map(ord, packet_data1)))
+        expect += packet_end
 
         expect += packet_marker + '\x00' + packet_data2 + packet_marker
         expect += chr(self.object.OneWireCRC(map(ord, packet_data2)))
+        expect += packet_end
 
         self.assertEqual(
             expect,
@@ -126,7 +122,7 @@ class TestK40_CLASS(unittest.TestCase):
         self.object.rapid_move(1000, 1000)
 
         # Deeper probing of this data block is done in test_egv
-        expect = '\xa6\x00ILzzz235Bzzz235S1PFFFFFFFFFFFF\xa6\x8a'
+        expect = '\xa6\x00ILzzz235Bzzz235S1PFFFFFFFFFFFF\xa6\x8a\xa0'
         self.assertEqual(self.object.dev.write_data, expect)
 
     def test_hex2dec(self):
