@@ -129,7 +129,7 @@ class TestegvClass(unittest.TestCase):
 
         for test in tests:
             self.data = []
-            self.object.make_cut_line( test['x'], test['y'] )
+            self.object.make_cut_line( test['x'], test['y'], Spindle=True )
             self.object.flush()
             got = "".join(map(chr, self.data))
             self.assertEqual( got, test['expect'] )
@@ -271,14 +271,14 @@ class TestegvClass(unittest.TestCase):
                 # Test varing the feed speed during a cut
                 'param': {
                     'ecoords_in': [
-                        [0,0,1,0.2],
-                        [0.004,0,1,0.2],
-                        [0.004,0.004,0,0.2],
-                        [0,0.004,0,0.5]
+                        [0,0,1,0.2,1],
+                        [0.004,0,1,0.2,1],
+                        [0.004,0.004,0,0.2,1],
+                        [0,0.004,0,0.5,1]
                     ],
                     'Feed': None,
                 },
-                'expect': 'ICV-7472211000000000CNRBS1EDBdULdU@NSECV-2462341000000000CNRBS1EDDTdURdFNSE',
+                'expect': 'ICV-7472211000000000CNRBS1EDBdULdUReTe@NSECV-2462341000000000CNRBS1ELeBeDDTdURdFNSE',
             },
 
             # TODO
