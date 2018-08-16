@@ -145,10 +145,10 @@ class TestegvClass(unittest.TestCase):
             self.object.make_speed(Feed=0)
 
         tests = [
-            { 'f':   1, 'b': 'LASER-M2', 's': 0, 'e': 'CV1551931000000000C' },
-            { 'f':   6, 'b': 'LASER-M2', 's': 0, 'e': 'CV2390681000000000C' },
-            { 'f':   7, 'b': 'LASER-M2', 's': 0, 'e': 'CV0640541000000000' },
-            { 'f': 100, 'b': 'LASER-M2', 's': 0, 'e': 'CV2232481000000000' },
+            { 'f':   1, 'b': 'LASER-M2', 's': 0, 'e': 'CV1551931001052089C' },
+            { 'f':   6, 'b': 'LASER-M2', 's': 0, 'e': 'CV2390681004002046C' },
+            { 'f':   7, 'b': 'LASER-M2', 's': 0, 'e': 'CV0640541004001222' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 0, 'e': 'CV2232481051000031' },
             { 'f': 100, 'b': 'LASER-M2', 's': 1, 'e':  'V2232481G001' },
             { 'f': 100, 'b': 'LASER-M2', 's': 9, 'e':  'V2232481G009' },
 
@@ -236,14 +236,14 @@ class TestegvClass(unittest.TestCase):
                 'param': {
                     'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
                 },
-                'expect': 'ICV1551931000000000CNRBS1EFNSE',
+                'expect': 'ICV1551931001052089CNRBS1EFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
                     'startX': 0.01, 'startY': 0.02,
                 },
-                'expect': 'ICV1551931000000000CRtTjNRBS1ETcLcTNLqBmSEFNSE',
+                'expect': 'ICV1551931001052089CRtTjNRBS1ETcLcTNLqBmSEFNSE',
             },
             {
                 'param': {
@@ -251,28 +251,28 @@ class TestegvClass(unittest.TestCase):
                     'units': 'mm',
                     'startX': 0.2, 'startY': 0.4,
                 },
-                'expect': 'ICV1551931000000000CRpThNRBS1ETcLcTNLmBkSEFNSE',
+                'expect': 'ICV1551931001052089CRpThNRBS1ETcLcTNLmBkSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0],[0.1,0,1],[0.1,0.1,0],[0,0.1,1]],
                     'Feed': 1,
                 },
-                'expect': 'ICV1551931000000000CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
+                'expect': 'ICV1551931001052089CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,1],[0.1,0,1],[0.1,0.1,0],[0,0.1,0]],
                     'Feed': 1,
                 },
-                'expect': 'ICV1551931000000000CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
+                'expect': 'ICV1551931001052089CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,1],[0.004,0,1],[0.004,0.004,0],[0,0.004,0]],
                     'Feed': 1,
                 },
-                'expect': 'ICV1551931000000000CNRBS1EDBdULdDTdURdFNSE',
+                'expect': 'ICV1551931001052089CNRBS1EDBdULdDTdURdFNSE',
             },
 
             # test the variable feed speed
@@ -280,13 +280,13 @@ class TestegvClass(unittest.TestCase):
                 'param': {
                     'ecoords_in': [[0,0,0,0.5],[0,0,0]], 'Feed': None,
                 },
-                'expect': 'ICV-2462341000000000CNRBS1EFNSE',
+                'expect': 'ICV167769941981001252487CNRBS1EFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0,0.2],[0,0,0]], 'Feed': None,
                 },
-                'expect': 'ICV-7472211000000000CNRBS1EFNSE',
+                'expect': 'ICV1677621908510011046633CNRBS1EFNSE',
             },
             {
                 # Test varing the feed speed during a cut
@@ -299,7 +299,7 @@ class TestegvClass(unittest.TestCase):
                     ],
                     'Feed': None,
                 },
-                'expect': 'ICV-7472211000000000CNRBS1EDBdULdUReTe@NSECV-2462341000000000CNRBS1ELeBeDDTdURdFNSE',
+                'expect': 'ICV1677621908510011046633CNRBS1EDBdULdUReTe@NSECV167769941981001252487CNRBS1ELeBeDDTdURdFNSE',
             },
 
             # TODO
