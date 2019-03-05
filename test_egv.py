@@ -65,7 +65,7 @@ class TestegvClass(unittest.TestCase):
 #        )
 
     def test_make_distance(self):
-        with self.assertRaises(StandardError):
+        with self.assertRaises(Exception):
             self.object.make_distance(1.1)
 
         # What a strange number coding.  I guess they had never heard of
@@ -110,9 +110,9 @@ class TestegvClass(unittest.TestCase):
             self.assertEqual( got, test['expect'] )
 
     def test_make_cut_line(self):
-        with self.assertRaises(StandardError):
+        with self.assertRaises(Exception):
             self.object.make_cut_line(1.5,1,Spindle=True)
-        with self.assertRaises(StandardError):
+        with self.assertRaises(Exception):
             self.object.make_cut_line(1,1.5,Spindle=True)
 
         tests = [
@@ -139,7 +139,7 @@ class TestegvClass(unittest.TestCase):
     def test_make_speed(self):
         with self.assertRaises(TypeError):
             self.object.make_speed()
-        with self.assertRaises(StandardError):
+        with self.assertRaises(Exception):
             self.object.make_speed(board_name='larry')
         with self.assertRaises(ZeroDivisionError):
             self.object.make_speed(Feed=0)
@@ -236,14 +236,14 @@ class TestegvClass(unittest.TestCase):
                 'param': {
                     'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
                 },
-                'expect': 'ICV1551931001052089CNRBS1EFNSE',
+                'expect': 'CV1551931001052089CNRBS1EFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
                     'startX': 0.01, 'startY': 0.02,
                 },
-                'expect': 'ICV1551931001052089CRtTjNRBS1ETcLcTNLqBmSEFNSE',
+                'expect': 'CV1551931001052089CRtTjNRBS1ETcLcTNLqBmSEFNSE',
             },
             {
                 'param': {
@@ -251,28 +251,28 @@ class TestegvClass(unittest.TestCase):
                     'units': 'mm',
                     'startX': 0.2, 'startY': 0.4,
                 },
-                'expect': 'ICV1551931001052089CRpThNRBS1ETcLcTNLmBkSEFNSE',
+                'expect': 'CV1551931001052089CRpThNRBS1ETcLcTNLmBkSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0],[0.1,0,1],[0.1,0.1,0],[0,0.1,1]],
                     'Feed': 1,
                 },
-                'expect': 'ICV1551931001052089CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
+                'expect': 'CV1551931001052089CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,1],[0.1,0,1],[0.1,0.1,0],[0,0.1,0]],
                     'Feed': 1,
                 },
-                'expect': 'ICV1551931001052089CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
+                'expect': 'CV1551931001052089CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,1],[0.004,0,1],[0.004,0.004,0],[0,0.004,0]],
                     'Feed': 1,
                 },
-                'expect': 'ICV1551931001052089CNRBS1EDBdULdDTdURdFNSE',
+                'expect': 'CV1551931001052089CNRBS1EDBdULdDTdURdFNSE',
             },
 
             # test the variable feed speed
@@ -280,13 +280,13 @@ class TestegvClass(unittest.TestCase):
                 'param': {
                     'ecoords_in': [[0,0,0,0.5],[0,0,0]], 'Feed': None,
                 },
-                'expect': 'ICV167769941981001252487CNRBS1EFNSE',
+                'expect': 'CV167769941981001252487CNRBS1EFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0,0.2],[0,0,0]], 'Feed': None,
                 },
-                'expect': 'ICV1677621908510011046633CNRBS1EFNSE',
+                'expect': 'CV1677621908510011046633CNRBS1EFNSE',
             },
             {
                 # Test varing the feed speed during a cut
@@ -299,7 +299,7 @@ class TestegvClass(unittest.TestCase):
                     ],
                     'Feed': None,
                 },
-                'expect': 'ICV1677621908510011046633CNRBS1EDBdULdUReTe@NSECV167769941981001252487CNRBS1ELeBeDDTdURdFNSE',
+                'expect': 'CV1677621908510011046633CNRBS1EDBdULdUReTe@NSECV167769941981001252487CNRBS1ELeBeDDTdURdFNSE',
             },
 
             # TODO
