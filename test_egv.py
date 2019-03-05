@@ -299,7 +299,7 @@ class TestegvClass(unittest.TestCase):
                     ],
                     'Feed': None,
                 },
-                'expect': 'CV1677621908510011046633CNRBS1EDBdULdUReTe@NSECV167769941981001252487CNRBS1ELeBeDDTdURdFNSE',
+                'expect': 'CV1677621908510011046633CNRBS1EDBdULdU@NSECV167769941981001252487CNRBS1EDDTdURdFNSE',
             },
 
             # TODO
