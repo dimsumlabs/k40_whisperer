@@ -70,6 +70,7 @@ except:
 
 import math
 from time import time
+from time import strftime
 import os
 import re
 import binascii
@@ -1619,6 +1620,42 @@ class Application(Frame):
         dymils =   y_end_mils - y_start_mils
         self.Send_Rapid_Move(dxmils,dxmils)
 
+
+    def magic_fields(self,svg_reader):
+        """Process the XML data and look for elements with magic IDs"""
+
+        magic_id = "field_magic"
+        label_attr = '{http://www.inkscape.org/namespaces/inkscape}label'
+
+        elements = svg_reader.document.xpath(
+            '//*[starts-with(@id,"{}")]'.format(magic_id))
+
+        for text in elements:
+            # HACK - should actually search for a <tspan>
+            tspan = text.getchildren()[0]
+            if tspan is None:
+                continue
+
+            if label_attr not in text.attrib:
+                continue
+            label = text.attrib[label_attr]
+
+            print("magic_field: id={} label={} orig.text={}".format(
+                text.attrib['id'], label, tspan.text))
+
+            if label == '#yyww':
+                # Use the ISO8601 year/week definitions
+                tspan.text = strftime('%g%V')
+            elif label == '#raster':
+                tspan.text = "{}*{}".format(
+                    self.Reng_passes.get(), self.Reng_feed.get())
+            elif label == '#vector':
+                tspan.text = "{}*{}".format(
+                    self.Veng_passes.get(), self.Veng_feed.get())
+            elif label == '#cut':
+                tspan.text = "{}*{}".format(
+                    self.Vcut_passes.get(), self.Vcut_feed.get())
+
         
     def Open_SVG(self,filemname):
         self.resetPath()
@@ -1631,6 +1668,7 @@ class Application(Frame):
         try:
             try:
                 svg_reader.parse(self.SVG_FILE)
+                self.magic_fields(svg_reader)
                 svg_reader.make_paths()
             except SVG_TEXT_EXCEPTION as e:
                 svg_reader = SVG_READER()
@@ -1638,6 +1676,7 @@ class Application(Frame):
                 self.statusMessage.set("Converting TEXT to PATHS.")
                 self.master.update()
                 svg_reader.parse(self.SVG_FILE)
+                self.magic_fields(svg_reader)
                 svg_reader.make_paths(txt2paths=True)
                 
         except Exception as e:
