@@ -141,43 +141,41 @@ class TestegvClass(unittest.TestCase):
             self.object.make_speed()
         with self.assertRaises(Exception):
             self.object.make_speed(board_name='larry')
-        with self.assertRaises(ZeroDivisionError):
-            self.object.make_speed(Feed=0)
 
         tests = [
-            { 'f':   1, 'b': 'LASER-M2', 's': 0, 'e': 'CV1551931001052089C' },
-            { 'f':   6, 'b': 'LASER-M2', 's': 0, 'e': 'CV2390681004002046C' },
-            { 'f':   7, 'b': 'LASER-M2', 's': 0, 'e': 'CV0640541004001222' },
-            { 'f': 100, 'b': 'LASER-M2', 's': 0, 'e': 'CV2212483051000031' },
-            { 'f': 100, 'b': 'LASER-M2', 's': 1, 'e':  'V2232482G001' },
-            { 'f': 100, 'b': 'LASER-M2', 's': 9, 'e':  'V2232482G009' },
+            { 'f':   1, 'b': 'LASER-M2', 's': 0, 'e': 'CV1551941002013022C' },
+            { 'f':   6, 'b': 'LASER-M2', 's': 0, 'e': 'CV2390691007000159C' },
+            { 'f':   7, 'b': 'LASER-M2', 's': 0, 'e': 'CV0640541008005155' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 0, 'e': 'CV2212503101000007' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 1, 'e':  'V2232502G001' },
+            { 'f': 100, 'b': 'LASER-M2', 's': 9, 'e':  'V2232502G009' },
 
             { 'f':   1, 'b': 'LASER-M1', 's': 1, 'e':  'V167762491201G001' },
-            { 'f':   6, 'b': 'LASER-M1', 's': 1, 'e':  'V0351471G001' },
-            { 'f':   6, 'b': 'LASER-M1', 's': 0, 'e': 'CV0351471000000000' },
+            { 'f':   6, 'b': 'LASER-M1', 's': 1, 'e':  'V0351481G001' },
+            { 'f':   6, 'b': 'LASER-M1', 's': 0, 'e': 'CV0351481007007122C' },
 
             { 'f':   1, 'b': 'LASER-M',  's': 1, 'e':  'V167762491201G001' },
-            { 'f':   6, 'b': 'LASER-M',  's': 1, 'e':  'V0351471G001' },
-            { 'f':   6, 'b': 'LASER-M',  's': 0, 'e': 'CV0351471' },
+            { 'f':   6, 'b': 'LASER-M',  's': 1, 'e':  'V0351481G001' },
+            { 'f':   6, 'b': 'LASER-M',  's': 0, 'e': 'CV0351481' },
 
-            { 'f': 0.7, 'b': 'LASER-B2', 's': 1, 'e':  'V167771821591G001C' },
-            { 'f':   6, 'b': 'LASER-B2', 's': 1, 'e':  'V2191371G001C' },
-            { 'f':   9, 'b': 'LASER-B2', 's': 1, 'e':  'V167772011811G001' },
-            { 'f':  10, 'b': 'LASER-B2', 's': 1, 'e':  'V0121131G001' },
-            { 'f':  10, 'b': 'LASER-B2', 's': 0, 'e': 'CV0121131000000000' },
+            { 'f': 0.7, 'b': 'LASER-B2', 's': 1, 'e':  'V167771821591G001' },
+            { 'f':   6, 'b': 'LASER-B2', 's': 1, 'e':  'V2191371G001' },
+            { 'f':   9, 'b': 'LASER-B2', 's': 1, 'e':  'V167772011821G001' },
+            { 'f':  10, 'b': 'LASER-B2', 's': 1, 'e':  'V0121111G001' },
+            { 'f':  10, 'b': 'LASER-B2', 's': 0, 'e': 'CV0121111011005181' },
 
-            { 'f': 0.7, 'b': 'LASER-B1', 's': 0, 'e': 'CV167771851161000000000' },
-            { 'f':   1, 'b': 'LASER-B1', 's': 0, 'e': 'CV0541281000000000' },
-            { 'f':  10, 'b': 'LASER-B1', 's': 0, 'e': 'CV2330241000000000' },
-            { 'f': 100, 'b': 'LASER-B1', 's': 0, 'e': 'CV2501323000000000' },
-            { 'f': 100, 'b': 'LASER-B1', 's': 1, 'e':  'V2502432G001' },
-            { 'f': 100, 'b': 'LASER-B1', 's': 9, 'e':  'V2502432G009' },
+            { 'f': 0.7, 'b': 'LASER-B1', 's': 0, 'e': 'CV167771851171001074011' },
+            { 'f':   1, 'b': 'LASER-B1', 's': 0, 'e': 'CV0541281002025234' },
+            { 'f':  10, 'b': 'LASER-B1', 's': 0, 'e': 'CV2330241011000120' },
+            { 'f': 100, 'b': 'LASER-B1', 's': 0, 'e': 'CV2501323101000001' },
+            { 'f': 100, 'b': 'LASER-B1', 's': 1, 'e':  'V2502442G001' },
+            { 'f': 100, 'b': 'LASER-B1', 's': 9, 'e':  'V2502442G009' },
 
-            { 'f': 0.7, 'b': 'LASER-A',  's': 1, 'e':  'V167771851161G001' },
+            { 'f': 0.7, 'b': 'LASER-A',  's': 1, 'e':  'V167771851171G001' },
             { 'f':   1, 'b': 'LASER-A',  's': 1, 'e':  'V0541281G001' },
             { 'f':   1, 'b': 'LASER-A',  's': 0, 'e': 'CV0541281' },
 
-            { 'f': 0.7, 'b': 'LASER-B',  's': 1, 'e':  'V167771851161G001' },
+            { 'f': 0.7, 'b': 'LASER-B',  's': 1, 'e':  'V167771851171G001' },
         ]
 
         for test in tests:
@@ -236,14 +234,14 @@ class TestegvClass(unittest.TestCase):
                 'param': {
                     'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
                 },
-                'expect': 'CV1551931001052089CNRBS1EFNSE',
+                'expect': 'CV1551941002013022CNRBS1EFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0],[0,0,0]], 'Feed': 1,
                     'startX': 0.01, 'startY': 0.02,
                 },
-                'expect': 'CV1551931001052089CRtTjNRBS1ETcLcTNLqBmSEFNSE',
+                'expect': 'CV1551941002013022CRtTjNRBS1ETcLcTNLqBmSEFNSE',
             },
             {
                 'param': {
@@ -251,28 +249,28 @@ class TestegvClass(unittest.TestCase):
                     'units': 'mm',
                     'startX': 0.2, 'startY': 0.4,
                 },
-                'expect': 'CV1551931001052089CRpThNRBS1ETcLcTNLmBkSEFNSE',
+                'expect': 'CV1551941002013022CRpThNRBS1ETcLcTNLmBkSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0],[0.1,0,1],[0.1,0.1,0],[0,0.1,1]],
                     'Feed': 1,
                 },
-                'expect': 'CV1551931001052089CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
+                'expect': 'CV1551941002013022CNRBS1ETcLcTNRcB103SETcLcTNL097BcSETcLcBNRcT097SETcLcTNR103BcSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,1],[0.1,0,1],[0.1,0.1,0],[0,0.1,0]],
                     'Feed': 1,
                 },
-                'expect': 'CV1551931001052089CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
+                'expect': 'CV1551941002013022CNRBS1EDB100UTcLcTNL097BcSEDT100UTcLcTNR103BcSEFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,1],[0.004,0,1],[0.004,0.004,0],[0,0.004,0]],
                     'Feed': 1,
                 },
-                'expect': 'CV1551931001052089CNRBS1EDBdULdDTdURdFNSE',
+                'expect': 'CV1551941002013022CNRBS1EDBdULdDTdURdFNSE',
             },
 
             # test the variable feed speed
@@ -280,13 +278,13 @@ class TestegvClass(unittest.TestCase):
                 'param': {
                     'ecoords_in': [[0,0,0,0.5],[0,0,0]], 'Feed': None,
                 },
-                'expect': 'CV167769941981001252487CNRBS1EFNSE',
+                'expect': 'CV167769941991001124164CNRBS1EFNSE',
             },
             {
                 'param': {
                     'ecoords_in': [[0,0,0,0.2],[0,0,0]], 'Feed': None,
                 },
-                'expect': 'CV1677621908510011046633CNRBS1EFNSE',
+                'expect': 'CV167762190851001327047CNRBS1EFNSE',
             },
             {
                 # Test varing the feed speed during a cut
@@ -299,7 +297,7 @@ class TestegvClass(unittest.TestCase):
                     ],
                     'Feed': None,
                 },
-                'expect': 'CV1677621908510011046633CNRBS1EDBdULdU@NSECV167769941981001252487CNRBS1EDDTdURdFNSE',
+                'expect': 'CV167762190851001327047CNRBS1EDBdULdU@NSECV167769941991001124164CNRBS1EDDTdURdFNSE',
             },
 
             # TODO
