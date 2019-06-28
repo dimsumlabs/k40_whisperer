@@ -102,11 +102,11 @@ class TestK40_CLASS(unittest.TestCase):
 
         packet_data2 += 'FFFFFFFF'  # fill data to a full packet size
 
-        expect = packet_marker + '\x00' + packet_data1 + packet_marker
+        expect = packet_end + packet_marker + '\x00' + packet_data1 + packet_marker
         expect += chr(self.object.OneWireCRC(map(ord, packet_data1)))
         expect += packet_end
 
-        expect += packet_marker + '\x00' + packet_data2 + packet_marker
+        expect += packet_end + packet_marker + '\x00' + packet_data2 + packet_marker
         expect += chr(self.object.OneWireCRC(map(ord, packet_data2)))
         expect += packet_end
 
@@ -122,7 +122,7 @@ class TestK40_CLASS(unittest.TestCase):
         self.object.rapid_move(1000, 1000)
 
         # Deeper probing of this data block is done in test_egv
-        expect = '\xa6\x00ILzzz235Bzzz235S1PFFFFFFFFFFFF\xa6\x8a\xa0'
+        expect = '\xa0\xa6\x00ILzzz235Bzzz235S1PFFFFFFFFFFFF\xa6\x8a\xa0'
         self.assertEqual(self.object.dev.write_data, expect)
 
     def test_hex2dec(self):
